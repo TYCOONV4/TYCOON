@@ -1,8 +1,8 @@
-# MONO
+# TYCOON
 
 An on-chain board game that lives inside a Uniswap v4 pool. Three contracts, no owner, nothing upgradeable.
 
-- `src/MonoToken.sol` — fixed supply ERC-20 (1,000,000,000 MONO). No mint, no pause, no transfer tax. Carries the
+- `src/MonoToken.sol` — fixed supply ERC-20 (1,000,000,000 TYCOON). No mint, no pause, no transfer tax. Carries the
   project card in `metadata()` and `tokenURI()`.
 - `src/MonopolyHook.sol` — the pool hook and the game. Immutable fee split, the board, the pieces, the streets, the
   START treasury, the claims.
@@ -16,11 +16,11 @@ dice for the wallet that signed the transaction and walks its piece. The dice co
 previous move, so the next roll is readable in advance and nobody can bend it. Doubles fling the piece twice as far.
 Landing on Go-to-Jail sends the piece to Jail with no payout. One move per piece per block.
 
-Passing START pays MONO from the treasury: `treasury × min(your share of the MONO held by players, 1%)`.
+Passing START pays TYCOON from the treasury: `treasury × min(your share of the TYCOON held by players, 1%)`.
 
-22 squares are coloured streets, bought with MONO while the piece stands on them:
+22 squares are coloured streets, bought with TYCOON while the piece stands on them:
 
-- `buyLand` — an empty street costs base × 1.1 (base = colour rank × 1,000,000 MONO); the base is locked as the
+- `buyLand` — an empty street costs base × 1.1 (base = colour rank × 1,000,000 TYCOON); the base is locked as the
   street's price, the 10% goes to the treasury.
 - `overbuy` — take a street from its owner for 1.2 × price: the price climbs to 1.1 ×, the old owner receives 1.1 ×.
 - `returnLand` — give a street back for 0.9 × price; 0.1 × goes to the treasury.
@@ -51,7 +51,7 @@ by the dead address, and whatever is left is burned. No contract holds a withdra
 ends the launch with zero tokens.
 
 Launch guard: for the first 20 swaps after the launch buy, and only within 10 blocks of the launch, one buy may take at
-most 2% of the supply (20,000,000 MONO); a larger buy reverts. Sells are never capped. Whichever ends first, the swap
+most 2% of the supply (20,000,000 TYCOON); a larger buy reverts. Sells are never capped. Whichever ends first, the swap
 count or the block window, ends the guard.
 
 ## Disclosures
