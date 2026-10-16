@@ -183,8 +183,8 @@ contract LaunchTest is Test {
         assertEq(address(hook).balance, hook.ethBuffer(), "land ETH on the hook");
         assertEq(hook.swapCount(), 1);
         assertEq(hook.rosterCount(), 0, "the launch buy moves no piece");
-        assertEq(token.name(), "Monopoly");
-        assertEq(token.symbol(), "MONO");
+        assertEq(token.name(), "Tycoon");
+        assertEq(token.symbol(), "TYCOON");
         (string memory d, string memory w, string memory img, bytes memory extra) = token.metadata();
         assertGt(bytes(d).length, 0);
         assertGt(bytes(w).length, 0);
@@ -552,7 +552,7 @@ contract LaunchTest is Test {
         _ignite();
         vm.roll(block.number + 11);
         _buy(alice, 5 ether);
-        _buy(bob, 12 ether); // rank 8 costs 8.8M MONO
+        _buy(bob, 12 ether); // rank 8 costs 8.8M TYCOON
         vm.prank(alice);
         token.approve(address(hook), type(uint256).max);
         vm.prank(bob);
