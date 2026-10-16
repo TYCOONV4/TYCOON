@@ -16,7 +16,7 @@ contract MonoToken is ERC20, ERC20Burnable {
 
     string private constant DESCRIPTION = "Every trade rolls the dice. Every land you own pays you ETH from every trade.";
     string private constant WEBSITE = "https://tycoon.family/";
-    string private constant IMAGE = "https://tycoon.family/token.jpg";
+    string private constant IMAGE = "https://raw.githubusercontent.com/TYCOONV4/TYCOON/main/token.jpg";
     string private constant X = "https://x.com/Tycoonv4";
 
     constructor(address recipient) ERC20("Tycoon", "TYCOON") {
