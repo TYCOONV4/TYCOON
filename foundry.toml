@@ -1,0 +1,32 @@
+[profile.default]
+src = "src"
+out = "out"
+libs = ["lib"]
+test = "test"
+script = "script"
+solc_version = "0.8.26"
+evm_version = "prague"
+optimizer = true
+optimizer_runs = 800
+via_ir = false
+bytecode_hash = "none"
+cbor_metadata = false
+fs_permissions = [{ access = "read", path = "./test/vectors" }]
+remappings = [
+    "@openzeppelin/contracts/=lib/openzeppelin-contracts/contracts/",
+    "@uniswap/v4-core/=lib/v4-core/",
+    "@uniswap/v4-periphery/=lib/v4-periphery/",
+    "forge-std/=lib/forge-std/src/",
+    "solmate/=lib/v4-core/lib/solmate/",
+    "permit2/=lib/v4-periphery/lib/permit2/",
+]
+
+[profile.default.fuzz]
+runs = 256
+
+[rpc_endpoints]
+mainnet = "${ETH_RPC}"
+
+[lint]
+severity = ["high", "med"]
+exclude_lints = ["unsafe-typecast", "mixed-case-variable", "mixed-case-function"]
