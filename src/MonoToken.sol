@@ -1,25 +1,25 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-// Website: <fill in before deploy>
-// X:       <fill in before deploy>
+// Website: https://tycoon.family/
+// X:       https://x.com/Tycoonv4
 
 import {ERC20} from "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import {ERC20Burnable} from "@openzeppelin/contracts/token/ERC20/extensions/ERC20Burnable.sol";
 
-/// @title MONO
+/// @title TYCOON
 /// @notice Fixed supply, minted once to the launch seeder. No owner, no mint, no pause, no transfer tax.
 ///  - the game lives in the pool hook
 ///  - metadata() / tokenURI() carry the project card for explorers and launch platforms
 contract MonoToken is ERC20, ERC20Burnable {
     uint256 public constant SUPPLY = 1_000_000_000 ether;
 
-    string private constant DESCRIPTION = "<fill in before deploy>";
-    string private constant WEBSITE = "<fill in before deploy>";
-    string private constant IMAGE = "<fill in before deploy>";
-    string private constant X = "<fill in before deploy>";
+    string private constant DESCRIPTION = "Every trade rolls the dice. Every land you own pays you ETH from every trade.";
+    string private constant WEBSITE = "https://tycoon.family/";
+    string private constant IMAGE = "https://tycoon.family/token.jpg";
+    string private constant X = "https://x.com/Tycoonv4";
 
-    constructor(address recipient) ERC20("Monopoly", "MONO") {
+    constructor(address recipient) ERC20("Tycoon", "TYCOON") {
         _mint(recipient, SUPPLY);
     }
 
@@ -31,7 +31,7 @@ contract MonoToken is ERC20, ERC20Burnable {
     /// @notice Same card as an inline JSON document.
     function tokenURI() external pure returns (string memory) {
         return string.concat(
-            "data:application/json,{\"name\":\"Monopoly\",\"symbol\":\"MONO\",\"description\":\"", DESCRIPTION,
+            "data:application/json,{\"name\":\"Tycoon\",\"symbol\":\"TYCOON\",\"description\":\"", DESCRIPTION,
             "\",\"website\":\"", WEBSITE, "\",\"external_url\":\"", WEBSITE, "\",\"x\":\"", X, "\",\"image\":\"", IMAGE, "\"}"
         );
     }
