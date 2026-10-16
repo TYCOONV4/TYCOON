@@ -1,8 +1,8 @@
 // SPDX-License-Identifier: MIT
 pragma solidity 0.8.26;
 
-// Website: <fill in before deploy>
-// X:       <fill in before deploy>
+// Website: https://tycoon.family/
+// X:       https://x.com/Tycoonv4
 
 import {IHooks} from "@uniswap/v4-core/src/interfaces/IHooks.sol";
 import {IUnlockCallback} from "@uniswap/v4-core/src/interfaces/callback/IUnlockCallback.sol";
@@ -20,12 +20,12 @@ import {FeeCalc} from "./libraries/FeeCalc.sol";
 import {IMonoToken} from "./interfaces/IMono.sol";
 
 /// @title MonopolyHook
-/// @notice The one permanent hook of the MONO/ETH pool and the board game itself. Immutable, no owner.
+/// @notice The one permanent hook of the TYCOON/ETH pool and the board game itself. Immutable, no owner.
 ///  - every swap pays 3.5% of its ETH leg: 0.3% platform, 1% team, 2.2% to street owners by colour weight
 ///  - a swap of at least MIN_MOVE ETH rolls 2d6 for tx.origin and walks its piece around 30 squares
 ///  - the dice come from the block hash of the piece's previous move: readable in advance, impossible to bend
-///  - passing START pays MONO from the treasury (10% of supply) in proportion to the holder's share, capped
-///  - streets are bought, taken over and returned in MONO while the piece stands on them
+///  - passing START pays TYCOON from the treasury (10% of supply) in proportion to the holder's share, capped
+///  - streets are bought, taken over and returned in TYCOON while the piece stands on them
 ///  - a reward left unclaimed for 24 hours can be redistributed to the other street owners by anyone
 ///  - launch guard: for the first 20 swaps after the launch buy, within 10 blocks, one buy takes at most 2% of supply
 contract MonopolyHook is IHooks, IUnlockCallback {
@@ -87,9 +87,9 @@ contract MonopolyHook is IHooks, IUnlockCallback {
 
     // ---------------- streets ----------------
     mapping(uint256 => address) public tileOwner;
-    mapping(uint256 => uint256) public tilePrice; // MONO locked in the square
+    mapping(uint256 => uint256) public tilePrice; // TYCOON locked in the square
     mapping(address => mapping(uint256 => uint256)) public ownedOfRank;
-    uint256 public treasury; // MONO paid out on passing START
+    uint256 public treasury; // TYCOON paid out on passing START
 
     // ---------------- pieces ----------------
     struct Pawn {
@@ -192,7 +192,7 @@ contract MonopolyHook is IHooks, IUnlockCallback {
 
     // ================= initialize =================
 
-    /// @dev One pool, opened once by the seeder. The MONO already sent here becomes the START treasury.
+    /// @dev One pool, opened once by the seeder. The TYCOON already sent here becomes the START treasury.
     function beforeInitialize(address sender, PoolKey calldata key, uint160) external onlyPoolManager returns (bytes4) {
         if (sender != seeder) revert NotSeeder();
         if (
@@ -353,7 +353,7 @@ contract MonopolyHook is IHooks, IUnlockCallback {
         }
     }
 
-    /// @dev Passing START pays treasury x min(holder share of circulating MONO, 1%).
+    /// @dev Passing START pays treasury x min(holder share of circulating TYCOON, 1%).
     function _payTreasury(address who) private {
         uint256 k = treasury;
         uint256 c = circulating();
@@ -369,7 +369,7 @@ contract MonopolyHook is IHooks, IUnlockCallback {
 
     // ================= the street market =================
 
-    /// @notice Claim an empty street your piece stands on: base x 1.1 MONO, the base locked as its price.
+    /// @notice Claim an empty street your piece stands on: base x 1.1 TYCOON, the base locked as its price.
     function buyLand(uint256 tileId) external nonReentrant {
         uint8 r = _rank(tileId);
         if (r == 0) revert NotAStreet();
@@ -511,7 +511,7 @@ contract MonopolyHook is IHooks, IUnlockCallback {
         if (!IMonoToken(token).transfer(to, amount)) revert TransferFailed();
     }
 
-    /// @notice MONO held by players: supply minus the pool, this contract and the burn address.
+    /// @notice TYCOON held by players: supply minus the pool, this contract and the burn address.
     function circulating() public view returns (uint256) {
         IMonoToken t = IMonoToken(token);
         return t.totalSupply() - t.balanceOf(address(poolManager)) - t.balanceOf(address(this)) - t.balanceOf(DEAD);
